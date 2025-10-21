@@ -1,4 +1,4 @@
-# rathole
+# rathole.
 
 ![rathole-logo](./docs/img/rathole-logo.png)
 
