@@ -43,21 +43,27 @@ jobs:
       # Cross build
       - name: Install cross
         if: matrix.cross
-        run: cargo install --version 0.2.5 cross
+        run: cargo install cross --git https://github.com/cross-rs/cross
 
       - name: Build release
         if: matrix.cross
         run: cross build --release --target ${{ matrix.target }} --features embedded --no-default-features
 
+      - name: Verify build output
+        run: |
+          ls -la target/${{ matrix.target }}/release/
+          file target/${{ matrix.target }}/release/${{ matrix.exe }}
+          echo "Binary size: $(du -h target/${{ matrix.target }}/release/${{ matrix.exe }} | cut -f1)"
+
       - uses: actions/upload-artifact@v4
         with:
-          name: rathole-${{ matrix.target }}
+          name: rathole-${{ matrix.target }}-${{ github.sha }}
           path: target/${{ matrix.target }}/release/${{ matrix.exe }}
 
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.6.1
         with:
           type: zip
-          filename: rathole-${{ matrix.target }}.zip
+          filename: rathole-${{ matrix.target }}-${{ github.sha }}.zip
           directory: target/${{ matrix.target }}/release/
           path: ${{ matrix.exe }}
