@@ -1,0 +1,7 @@
+FROM ghcr.io/rust-cross/rust-musl-cross:riscv64gc-musl
+
+ENV CARGO_TARGET_RISCV64GC_UNKNOWN_LINUX_MUSL_LINKER=riscv64-linux-musl-gcc \
+    CC_riscv64gc_unknown_linux_musl=riscv64-linux-musl-gcc \
+    CXX_riscv64gc_unknown_linux_musl=riscv64-linux-musl-g++ \
+    AR_riscv64gc_unknown_linux_musl=riscv64-linux-musl-ar \
+    CARGO_TARGET_RISCV64GC_UNKNOWN_LINUX_MUSL_AR=riscv64-linux-musl-ar
